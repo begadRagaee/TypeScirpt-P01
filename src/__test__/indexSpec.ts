@@ -10,3 +10,9 @@ describe('Test basic endpoint server', () => {
     expect(response.status).toBe(200);
   });
 });
+describe('Test Post endpoint server', () => {
+  it('Post the / endpoint', async () => {
+    const response = await request.post('/');
+    expect(response.status).toBe(200);
+  });
+});
