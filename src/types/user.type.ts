@@ -1,8 +1,8 @@
 type User = {
-  readonly id?: number;
+  readonly id?: string;
   email: string;
   username: string;
-  frist_name: string;
+  first_name: string;
   last_name: string;
   password: string;
 };
