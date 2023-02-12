@@ -1,14 +1,14 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
-import dotenv from 'dotenv';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import errorMiddleware from './middleware/error.middleware';
-
-dotenv.config();
+import config from './config/config';
+import db from './database';
 
 const app: Express = express();
-const port = process.env.PORT;
+const port = config.port || 3000;
+
 // Middelware to parse incoming Request
 app.use(express.json());
 // HTTP Request Log Middelwere
@@ -27,7 +27,7 @@ app.use(
 );
 
 app.get('/', (req: Request, res: Response) => {
-  throw new Error('Error exist');
+  throw new Error();
   res.json({
     message: 'hello world 🌍',
   });
@@ -38,6 +38,20 @@ app.post('/', (req: Request, res: Response) => {
     message: 'hello world 🌍',
     data: req.body,
   });
+});
+
+// Test Database
+db.connect().then((client) => {
+  return client
+    .query('SELECT NOW()')
+    .then((res) => {
+      client.release();
+      console.log(res.rows);
+    })
+    .catch((err) => {
+      client.release();
+      console.log(err.stack);
+    });
 });
 
 app.use(errorMiddleware);
