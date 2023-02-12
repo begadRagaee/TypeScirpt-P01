@@ -1,8 +1,9 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Express, Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import errorMiddleware from './middleware/error.middleware';
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use(
 );
 
 app.get('/', (req: Request, res: Response) => {
+  throw new Error('Error exist');
   res.json({
     message: 'hello world 🌍',
   });
@@ -35,6 +37,14 @@ app.post('/', (req: Request, res: Response) => {
   res.json({
     message: 'hello world 🌍',
     data: req.body,
+  });
+});
+
+app.use(errorMiddleware);
+
+app.use((_req: Request, res: Response) => {
+  res.status(404).json({
+    message: 'oHH you are lost, read the api doc to find your way back home 😃',
   });
 });
 
