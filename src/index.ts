@@ -5,6 +5,7 @@ import rateLimit from 'express-rate-limit';
 import errorMiddleware from './middleware/error.middleware';
 import config from './config/config';
 import db from './database';
+import routes from './routes';
 
 const app: Express = express();
 const port = config.port || 3000;
@@ -55,6 +56,7 @@ db.connect().then((client) => {
     });
 });
 */
+app.use('/api', routes);
 
 app.use(errorMiddleware);
 
