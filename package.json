@@ -10,7 +10,10 @@
     "test": "npm run build && jasmine",
     "format": "prettier --write src/**/*.ts",
     "lint": "eslint src/**/**.ts",
-    "lint:fix": "eslint src/**/**.ts --fix"
+    "lint:fix": "eslint src/**/**.ts --fix",
+    "migration:run": "db-migrate up",
+    "migration:down": "db-migrate down"
+
   },
   "keywords": [],
   "author": "",
@@ -33,6 +36,8 @@
     "@typescript-eslint/eslint-plugin": "^5.51.0",
     "@typescript-eslint/parser": "^5.51.0",
     "concurrently": "^7.6.0",
+    "db-migrate": "^0.11.13",
+    "db-migrate-pg": "^1.2.2",
     "eslint": "^8.34.0",
     "express-rate-limit": "^6.7.0",
     "helmet": "^6.0.1",

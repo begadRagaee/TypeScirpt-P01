@@ -21,5 +21,5 @@ export default {
   pgUser: PGUSER,
   pgDd: NODE_ENV === 'dev' ? PGDATABASE : PGDATABASE_TEST,
   pgPasssword: PGPASSWORD,
-  pgPort: PGPORT
+  pgPort: PGPORT,
 };

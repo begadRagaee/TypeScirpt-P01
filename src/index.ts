@@ -40,6 +40,7 @@ app.post('/', (req: Request, res: Response) => {
   });
 });
 
+/*
 // Test Database
 db.connect().then((client) => {
   return client
@@ -53,6 +54,7 @@ db.connect().then((client) => {
       console.log(err.stack);
     });
 });
+*/
 
 app.use(errorMiddleware);
 
