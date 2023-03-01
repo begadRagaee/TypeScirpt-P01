@@ -21,7 +21,6 @@ class UserModel {
         u.email,
         u.username,
         u.first_name,
-
         u.last_name,
         hashPassword(u.password),
       ]);
@@ -117,6 +116,31 @@ class UserModel {
       throw new Error(
         `Could not delete User ${id} ${(error as Error).message} 💢`
       );
+    }
+  }
+  async authenticate(email: string, password: string): Promise<User | null> {
+    try {
+      const connention = await db.connect();
+      const sql = 'SELECT password FROM users WHERE email=$1';
+      const result = await connention.query(sql, [email]);
+      if (result.rows.length) {
+        const { password: hashPassword } = result.rows[0];
+        const isPasswordValid = bcrypt.compareSync(
+          `${password}${config.pepper}`,
+          hashPassword
+        );
+        if (isPasswordValid) {
+          const userInfo = await connention.query(
+            'SELECT id, email, username, first_name, last_name from users WHERE email=($1)',
+            [email]
+          );
+          return userInfo.rows[0];
+        }
+      }
+      connention.release();
+      return null;
+    } catch (error) {
+      throw new Error(`Unable to Login ${(error as Error).message}`);
     }
   }
 

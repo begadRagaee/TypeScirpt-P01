@@ -14,6 +14,7 @@ const {
   PGPORT,
   BCRTPTPASSWORD,
   SLARTROUNDS,
+  TOKEN_SECRET
 } = process.env;
 
 export default {
@@ -26,4 +27,5 @@ export default {
   pgPort: PGPORT,
   pepper: BCRTPTPASSWORD,
   salt: SLARTROUNDS,
+  tokensecret: TOKEN_SECRET
 };
